@@ -1,7 +1,6 @@
 package game2048;
 
 import java.util.Formatter;
-import java.util.Iterator;
 import java.util.Observable;
 
 
@@ -115,12 +114,95 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        changed = tryToMoveTiles(side);
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
     }
+
+    /**
+     *
+     * @return if any tiles move, then return true or else return false
+     */
+    public boolean tryToMoveTiles(Side side){
+        board.setViewingPerspective(side);
+
+        /* default value is false */
+        boolean[][] mergeRecord = new boolean[board.size()][board.size()];
+        boolean isChange = false;
+
+        for (int row = 2; row >= 0; row--) {
+            for (int col = 0; col < board.size(); col++) {
+                Tile bottom = board.tile(col, row);
+
+                int upSteps = tileMoveUpNeedSteps(side,col, row, bottom);
+                if (isNotMoved(upSteps)){
+                    continue;
+                }
+
+
+                int newRow = row + upSteps;
+                boolean mergedBefore = mergeRecord[col][newRow];
+
+                if (mergedBefore){
+                    newRow -= 1;
+                }
+
+                if (newRow != row) {
+                    boolean isMerge = board.move(col, newRow, bottom);
+                    isChange = true;
+                    bottom = board.tile(col, newRow);
+                    if (isMerge) {
+                        score += bottom.value();
+                        mergeRecord[col][newRow] = true;
+                    }
+                }
+
+            }
+        }
+        board.setViewingPerspective(Side.NORTH);
+        return isChange;
+    }
+
+    public boolean isNotMoved(int steps){
+        return steps == 0 || steps == -1;
+    }
+
+
+
+    /**
+     *
+     * @param bottom This should be not at row 3
+     * @return Get the steps that a tile needs to move up until it is obstructed. If bottom is null, then return -1.
+     */
+    public int tileMoveUpNeedSteps(Side side,int col, int row,Tile bottom){
+        if (bottom == null){
+            return -1;
+        }
+
+        int steps = 0;
+
+        for (int i = row + 1; i < board.size(); i++) {
+            Tile top = board.tile(col, i);
+
+            /* There is a obstruction */
+            if (top != null){
+                /* If here can have merge, then steps add 1 */
+                if (isSameValue(top, bottom)){
+                    steps += 1;
+                }
+                return steps;
+            }else {
+                steps += 1;
+            }
+        }
+
+        return steps;
+    }
+
+
 
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
@@ -172,17 +254,14 @@ public class Model extends Observable {
         if (emptySpaceExists(b)){
             return true;
         }
-        if (isVerticalMoveValid(b) || isHorizontalMoveValid(b)){
-            return true;
-        }
-        return false;
+        return isVerticalMoveValid(b) || isHorizontalMoveValid(b);
     }
 
     public static boolean isVerticalMoveValid(Board b){
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < b.size() - 1; i++) {
             for (int j = 0; j < b.size(); j++) {
-                Tile top = b.tile(i, j);
-                Tile bottom = b.tile(i + 1, j);
+                Tile bottom = b.tile(j, i);
+                Tile top = b.tile(j, i + 1);
                 if (isSameValue(top, bottom)){
                     return true;
                 }
@@ -192,16 +271,10 @@ public class Model extends Observable {
     }
 
     public static boolean isHorizontalMoveValid(Board b){
-        for (int i = 0; i < b.size(); i++) {
-            for (int j = 0; j < 3; j++) {
-                Tile left = b.tile(i, j);
-                Tile right = b.tile(i, j + 1);
-                if (isSameValue(left, right)){
-                    return true;
-                }
-            }
-        }
-        return false;
+        b.setViewingPerspective(Side.WEST);
+        boolean isHorizontalMoveValid = isVerticalMoveValid(b);
+        b.setViewingPerspective(Side.NORTH);
+        return isHorizontalMoveValid;
     }
 
     public static boolean isSameValue(Tile a, Tile b){
