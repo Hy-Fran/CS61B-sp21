@@ -99,8 +99,9 @@ public class LinkedListDeque<T> implements Deque<T>{
         Node node = sentinel;
         while (node.next != sentinel){
             node = node.next;
-            System.out.println(node.item);
+            System.out.print(node.item + " ");
         }
+        System.out.println();
     }
 
     /**
@@ -213,7 +214,7 @@ public class LinkedListDeque<T> implements Deque<T>{
         if (o == this){
             return true;
         }
-        if (!(o.getClass() == this.getClass())){
+        if (!(o instanceof LinkedListDeque)){
             return false;
         }
         LinkedListDeque<T> paramDeque = (LinkedListDeque<T>) o;
