@@ -3,7 +3,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T> {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     private int size = 0;
     private final Node sentinel;
     private Node recursive;
@@ -137,7 +137,9 @@ public class LinkedListDeque<T> implements Deque<T> {
      */
     public T getRecursive(int index) {
         if (index == 0) {
-            return recursive.next.item;
+            Node node = recursive.next;
+            recursive = sentinel;
+            return node.item;
         }
         recursive = recursive.next;
         if (recursive == sentinel) {
@@ -152,6 +154,7 @@ public class LinkedListDeque<T> implements Deque<T> {
      * @return LinkedListIterator
      * @NotNull
      */
+    @Override
     public Iterator<T> iterator() {
         return new LinkedListIterator();
     }
@@ -163,19 +166,20 @@ public class LinkedListDeque<T> implements Deque<T> {
      * @param o - object
      * @return 是否相等
      */
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof LinkedListDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        LinkedListDeque<T> paramDeque = (LinkedListDeque<T>) o;
-        if (paramDeque.size != size()) {
+        Deque<T> paramDeque = (Deque<T>) o;
+        if (paramDeque.size() != size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (!paramDeque.contains(get(i))) {
+            if (!contains(paramDeque.get(i))) {
                 return false;
             }
         }
@@ -192,7 +196,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return false;
     }
 
-    public class Node {
+    private class Node {
         private final T item;
         private Node prev;
         private Node next;
@@ -221,7 +225,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     }
 
-    public class LinkedListIterator implements Iterator<T> {
+    private class LinkedListIterator implements Iterator<T> {
         private Node node;
 
         public LinkedListIterator() {

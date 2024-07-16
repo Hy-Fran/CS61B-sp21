@@ -1,5 +1,6 @@
 package deque;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -163,5 +164,21 @@ public class LinkedListDequeTest {
         notEqualList1.addLast(5);
         notEqualList1.addLast(6);
         assertNotEquals(list1, notEqualList1);
+    }
+
+    @Test
+    public void recursiveTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        list.addLast(5);
+        list.addLast(6);
+        Assert.assertEquals(3, list.getRecursive(2).intValue());
+        for (int i = 0; i < list.size(); i++){
+            int real = list.getRecursive(i);
+            Assert.assertEquals(list.get(i).intValue(), real);
+        }
     }
 }

@@ -7,7 +7,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size = 0;
 
     public ArrayDeque() {
-        this(100);
+        this(8);
     }
 
     public ArrayDeque(int capacity) {
@@ -25,7 +25,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addFirst(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            resize(size * 4);
         }
         size += 1;
         T swap = item;
@@ -39,7 +39,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addLast(T item) {
         if (size == items.length) {
-            resize(size * 2);
+            resize(size * 4);
         }
         items[size] = item;
         size += 1;
@@ -64,6 +64,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         size -= 1;
+        if (items.length / 4 > size){
+            resize(items.length / 4);
+        }
         T first = items[0];
 
         T swap = items[size];
@@ -81,6 +84,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
         size -= 1;
+        if (items.length / 4 > size){
+            resize(items.length / 4);
+        }
         T item = items[size];
         items[size] = null;
         return item;
@@ -110,19 +116,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof ArrayDeque)) {
+        if (!(obj instanceof Deque)) {
             return false;
         }
-        ArrayDeque<T> cast = (ArrayDeque<T>) obj;
+        Deque<T> paramDeque = (Deque<T>) obj;
+        if (paramDeque.size() != size()) {
+            return false;
+        }
         for (int i = 0; i < size; i++) {
-            if (!cast.contains(items[i])) {
+            if (!contains(paramDeque.get(i))) {
                 return false;
             }
         }
         return true;
     }
 
-    public class ArrayDequeIterator implements Iterator<T> {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int index;
 
         public ArrayDequeIterator() {
