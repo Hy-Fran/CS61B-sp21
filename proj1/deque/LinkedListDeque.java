@@ -161,7 +161,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     /**
      * 返回参数是否等于Deque。
-     * 如果o是一个Deque并且包含相同的内容（由泛型T的equals方法决定）且顺序相同，则认为它们相等。（添加于2/12：你需要使用instance of关键字来实现这一点。阅读这里以获取更多信息）
+     * 若o是一个Deque并且包含相同的内容且顺序相同，则认为它们相等
      *
      * @param o - object
      * @return 是否相等
@@ -201,30 +201,17 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         private Node prev;
         private Node next;
 
-        public Node(T item) {
+        Node(T item) {
             this.item = item;
             this.prev = null;
             this.next = null;
         }
 
-        public Node(T item, Node prev, Node next) {
+        Node(T item, Node prev, Node next) {
             this.item = item;
             this.next = next;
             this.prev = prev;
         }
-
-        public Node next() {
-            return next;
-        }
-
-        public Node prev() {
-            return prev;
-        }
-
-        public T getItem() {
-            return item;
-        }
-
     }
 
     private class LinkedListIterator implements Iterator<T> {

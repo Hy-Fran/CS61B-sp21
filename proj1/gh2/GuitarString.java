@@ -1,14 +1,15 @@
 package gh2;
 
-import deque.Deque;
-
 import deque.ArrayDeque;
+import deque.Deque;
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
-    /** Constants. Do not change. In case you're curious, the keyword final
+    /**
+     * Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. We'll discuss this and
-     * other topics in lecture on Friday. */
+     * other topics in lecture on Friday.
+     */
     private static final int SR = 44100;      // Sampling Rate
     private static final double DECAY = .996; // energy decay factor
 
@@ -19,7 +20,7 @@ public class GuitarString {
     public GuitarString(double frequency) {
         double capacity = SR / frequency;
         this.buffer = new ArrayDeque<>((int) Math.round(capacity));
-        for (int i = 0; i < capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             buffer.addLast(0d);
         }
     }
@@ -32,7 +33,7 @@ public class GuitarString {
         //       are different from each other. It means you should repeatedly call
         //       Math.random() - 0.5 to generate new random numbers for each array index.
         ArrayDeque<Double> newDeque = new ArrayDeque<>(buffer.size());
-        for (int i = 0; i < buffer.size(); i++){
+        for (int i = 0; i < buffer.size(); i++) {
             newDeque.addLast(Math.random() - 0.5);
         }
         buffer = newDeque;
