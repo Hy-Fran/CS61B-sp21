@@ -1,15 +1,30 @@
 package deque;
 
 public class ArrayDeque<T> implements Deque<T> {
-    private final T[] items;
+    private T[] items;
     private int size = 0;
 
-    ArrayDeque() {
-        items = (T[]) new Object[100];
+    public ArrayDeque() {
+        this(100);
+    }
+
+    public ArrayDeque(int capacity){
+        items = (T[]) new Object[capacity];
+    }
+
+    public void resize(int capacity){
+        T[] newArray = (T[])new Object[capacity];
+        for (int i = 0; i < size && i < capacity; i++){
+            newArray[i] = items[i];
+        }
+        items = newArray;
     }
 
     @Override
     public void addFirst(T item) {
+        if (size == items.length){
+            resize(size * 2);
+        }
         size += 1;
         T swap = item;
         for (int i = 0; i < size; i++) {
@@ -21,6 +36,9 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void addLast(T item) {
+        if (size == items.length){
+            resize(size * 2);
+        }
         items[size] = item;
         size += 1;
     }

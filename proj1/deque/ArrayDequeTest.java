@@ -140,4 +140,15 @@ public class ArrayDequeTest {
         notEqualList1.addLast(6);
         assertNotEquals(list1, notEqualList1);
     }
+
+    @Test
+    public void testResize(){
+        ArrayDeque<Integer> list = new ArrayDeque<>(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+    }
 }
