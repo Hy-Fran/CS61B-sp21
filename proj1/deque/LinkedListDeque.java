@@ -74,15 +74,6 @@ public class LinkedListDeque<T> implements Deque<T>{
     }
 
     /**
-     * 判断deque是否为空
-     * @return 如果deque为空，则返回true
-     */
-    @Override
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    /**
      * 返回deque中的项目数
      * @return 返回大小
      */
