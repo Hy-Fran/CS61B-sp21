@@ -23,6 +23,4 @@ public interface Deque<T> {
 
     Iterator<T> iterator();
 
-    boolean contains(T t);
-
 }

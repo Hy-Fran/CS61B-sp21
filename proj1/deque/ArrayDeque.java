@@ -1,6 +1,5 @@
 package deque;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
@@ -11,7 +10,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items = (T[]) new Object[8];
     }
 
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
         for (int i = 0; i < size && i < capacity; i++) {
             newArray[i] = items[i];
@@ -40,8 +39,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size += 1;
     }
 
-    private void growSize(){
-        resize((int) (size * (1.25)));
+    private void growSize() {
+        resize(size * 4);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length / 4 > size && size > 4) {
+        if (items.length / 4 > size && size > 8) {
             decreaseSize();
         }
         T[] newItems = (T[]) new Object[items.length];
@@ -78,7 +77,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length / 4 > size && size > 4) {
+        if (items.length / 4 > size && size > 8) {
             decreaseSize();
         }
         size -= 1;
@@ -87,7 +86,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return item;
     }
 
-    private void decreaseSize(){
+    private void decreaseSize() {
         resize(items.length / 4);
     }
 
@@ -101,7 +100,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return new ArrayDequeIterator();
     }
 
-    public boolean contains(T item) {
+    private boolean contains(T item) {
         for (int i = 0; i < size; i++) {
             if (items[i].equals(item)) {
                 return true;

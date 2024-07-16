@@ -186,7 +186,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return true;
     }
 
-    public boolean contains(Object o) {
+    private boolean contains(Object o) {
         for (int i = 0; i < size; i++) {
             T item = get(i);
             if (item.equals(o)) {
@@ -217,7 +217,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class LinkedListIterator implements Iterator<T> {
         private Node node;
 
-        public LinkedListIterator() {
+        LinkedListIterator() {
             node = sentinel;
         }
 
