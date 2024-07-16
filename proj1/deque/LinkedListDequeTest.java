@@ -119,4 +119,44 @@ public class LinkedListDequeTest {
         }
 
     }
+
+    @Test
+    public void iteratorTest(){
+        LinkedListDeque<Integer> list = new LinkedListDeque<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        list.addLast(5);
+        Deque.Iterator<Integer> iter = list.iterator();
+        int i = 1;
+        while (iter.hasNext()){
+            int item = iter.next();
+            assertEquals(item, i);
+            i++;
+        }
+    }
+
+    @Test
+    public void listEquals(){
+        LinkedListDeque<Integer> list1 = new LinkedListDeque<>();
+        list1.addLast(1);
+        list1.addLast(2);
+        list1.addLast(3);
+        list1.addLast(4);
+        LinkedListDeque<Integer> equalList1 = new LinkedListDeque<>();
+        equalList1.addLast(2);
+        equalList1.addLast(1);
+        equalList1.addLast(4);
+        equalList1.addLast(3);
+        LinkedListDeque<Integer> notEqualList1 = new LinkedListDeque<>();
+        notEqualList1.addLast(1);
+        notEqualList1.addLast(2);
+        notEqualList1.addLast(3);
+        assertEquals(list1, equalList1);
+        assertNotEquals(list1, notEqualList1);
+        notEqualList1.addLast(5);
+        notEqualList1.addLast(6);
+        assertNotEquals(list1, notEqualList1);
+    }
 }

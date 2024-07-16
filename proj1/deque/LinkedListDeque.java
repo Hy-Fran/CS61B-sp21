@@ -1,10 +1,8 @@
 package deque;
 
-import net.sf.saxon.om.Item;
 
-import java.util.Iterator;
 
-public class LinkedListDeque<T>{
+public class LinkedListDeque<T> implements Deque<T>{
     private int size = 0;
     private Node sentinel;
     private Node recursive;
@@ -20,7 +18,6 @@ public class LinkedListDeque<T>{
             this.next = next;
             this.prev = prev;
         }
-
 
 
         private T item;
@@ -54,6 +51,7 @@ public class LinkedListDeque<T>{
      * 在deque的前端添加一个类型为T的项目。你可以假设item永远不会是null
      * @param item - never null
      */
+    @Override
     public void addFirst(T item){
         size++;
         Node original = sentinel.next;
@@ -66,6 +64,7 @@ public class LinkedListDeque<T>{
      * 在deque的后端添加一个类型为T的项目。你可以假设item永远不会是null。
      * @param item - nerver null
      */
+    @Override
     public void addLast(T item){
         size++;
         Node original = sentinel.prev;
@@ -78,14 +77,16 @@ public class LinkedListDeque<T>{
      * 判断deque是否为空
      * @return 如果deque为空，则返回true
      */
+    @Override
     public boolean isEmpty(){
-        return sentinel == sentinel.next;
+        return size == 0;
     }
 
     /**
      * 返回deque中的项目数
      * @return 返回大小
      */
+    @Override
     public int size(){
         return size;
     }
@@ -93,6 +94,7 @@ public class LinkedListDeque<T>{
     /**
      * 从第一个到最后一个打印deque中的项目，项目之间用空格隔开。打印完所有项目后，输出一个新行。
      */
+    @Override
     public void printDeque(){
         Node node = sentinel;
         while (node.next != sentinel){
@@ -105,6 +107,7 @@ public class LinkedListDeque<T>{
      * 移除并返回deque前端的项目。如果没有这样的项目，返回null。
      * @return remove first item, if it not exists then return null
      */
+    @Override
     public T removeFirst(){
         Node first = sentinel.next;
         if (first == sentinel){
@@ -122,6 +125,7 @@ public class LinkedListDeque<T>{
      * 移除并返回deque后端的项目。如果没有这样的项目，返回null。
      * @return remove last item, if it not exists then return null
      */
+    @Override
     public T removeLast(){
         Node last = sentinel.prev;
         if (last == sentinel){
@@ -142,6 +146,7 @@ public class LinkedListDeque<T>{
      * @param index - index
      * @return 返回对应item
      */
+    @Override
     public T get(int index){
         Node node = sentinel;
         while (node.next != sentinel){
@@ -171,23 +176,65 @@ public class LinkedListDeque<T>{
         return getRecursive(index - 1);
     }
 
+    public class LinkedListIterator implements Iterator<T>{
+        private Node node;
+
+        public LinkedListIterator(){
+            node = sentinel;
+        }
+
+        public boolean hasNext() {
+            return node.next != sentinel;
+        }
+
+        public T next() {
+            node = node.next;
+            return node.item;
+        }
+
+    }
+
     /**
      * 我们将制作的Deque对象是可迭代的（即Iterable<T>），因此我们必须提供此方法以返回一个迭代器。
-     * @return
+     * @NotNull
+     * @return LinkedListIterator
      */
-    public Iterator<T> iterator(){
-
-        return null;
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
     }
 
     /**
      * 返回参数是否等于Deque。
      * 如果o是一个Deque并且包含相同的内容（由泛型T的equals方法决定）且顺序相同，则认为它们相等。（添加于2/12：你需要使用instance of关键字来实现这一点。阅读这里以获取更多信息）
-     * @param o
-     * @return
+     * @param o - object
+     * @return 是否相等
      */
     public boolean equals(Object o){
+        if (o == this){
+            return true;
+        }
+        if (!(o.getClass() == this.getClass())){
+            return false;
+        }
+        LinkedListDeque<T> paramDeque = (LinkedListDeque<T>) o;
+        if (paramDeque.size != size()){
+            return false;
+        }
+        for (int i = 0;i < size;i++){
+            if (!paramDeque.contains(get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public boolean contains(Object o){
+        for (int i = 0;i < size;i++){
+            T item = get(i);
+            if (item.equals(o)){
+                return true;
+            }
+        }
         return false;
     }
 }
