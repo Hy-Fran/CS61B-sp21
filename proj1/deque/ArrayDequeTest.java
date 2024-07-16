@@ -1,6 +1,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 
@@ -109,7 +112,7 @@ public class ArrayDequeTest {
         list.addLast(3);
         list.addLast(4);
         list.addLast(5);
-        MyIterator<Integer> iterator = list.iterator();
+        Iterator<Integer> iterator = list.iterator();
         int i = 1;
         while (iterator.hasNext()){
             int item = iterator.next();
