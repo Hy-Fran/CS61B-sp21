@@ -90,7 +90,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public MyIterator<T> iterator() {
         return new ArrayDequeIterator();
     }
 
@@ -120,7 +120,7 @@ public class ArrayDeque<T> implements Deque<T> {
         return true;
     }
 
-    public class ArrayDequeIterator implements Iterator<T> {
+    public class ArrayDequeIterator implements MyIterator<T> {
         private int index;
 
         public ArrayDequeIterator() {

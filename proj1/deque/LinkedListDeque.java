@@ -168,7 +168,7 @@ public class LinkedListDeque<T> implements Deque<T>{
         return getRecursive(index - 1);
     }
 
-    public class LinkedListIterator implements Iterator<T>{
+    public class LinkedListIterator implements MyIterator<T> {
         private Node node;
 
         public LinkedListIterator(){
@@ -191,7 +191,7 @@ public class LinkedListDeque<T> implements Deque<T>{
      * @NotNull
      * @return LinkedListIterator
      */
-    public Iterator<T> iterator() {
+    public MyIterator<T> iterator() {
         return new LinkedListIterator();
     }
 

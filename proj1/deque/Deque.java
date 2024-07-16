@@ -19,7 +19,7 @@ public interface Deque<T> {
 
     T get(int index);
 
-    Iterator<T> iterator();
+    MyIterator<T> iterator();
 
     boolean equals(Object o);
 

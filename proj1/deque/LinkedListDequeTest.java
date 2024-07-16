@@ -128,7 +128,7 @@ public class LinkedListDequeTest {
         list.addLast(3);
         list.addLast(4);
         list.addLast(5);
-        Iterator<Integer> iter = list.iterator();
+        MyIterator<Integer> iter = list.iterator();
         int i = 1;
         while (iter.hasNext()){
             int item = iter.next();

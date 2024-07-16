@@ -109,7 +109,7 @@ public class ArrayDequeTest {
         list.addLast(3);
         list.addLast(4);
         list.addLast(5);
-        Iterator<Integer> iterator = list.iterator();
+        MyIterator<Integer> iterator = list.iterator();
         int i = 1;
         while (iterator.hasNext()){
             int item = iterator.next();

@@ -1,6 +1,6 @@
 package deque;
 
-public interface Iterator<T>{
+public interface MyIterator<T>{
     boolean hasNext();
 
     T next();
