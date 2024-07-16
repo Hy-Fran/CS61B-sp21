@@ -63,10 +63,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        size -= 1;
-        if (items.length / 4 > size) {
+        if (items.length / 4 > size - 1) {
             resize(items.length / 4);
         }
+        size -= 1;
         T first = items[0];
 
         T swap = items[size];
