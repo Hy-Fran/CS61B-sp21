@@ -23,9 +23,5 @@ public interface Deque<T> {
 
     boolean equals(Object o);
 
-    interface Iterator<T>{
-        boolean hasNext();
 
-        T next();
-    }
 }
