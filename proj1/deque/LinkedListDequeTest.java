@@ -167,7 +167,7 @@ public class LinkedListDequeTest {
     }
 
     @Test
-    public void recursiveTest(){
+    public void recursiveTest() {
         LinkedListDeque<Integer> list = new LinkedListDeque<>();
         list.addLast(1);
         list.addLast(2);
@@ -176,7 +176,7 @@ public class LinkedListDequeTest {
         list.addLast(5);
         list.addLast(6);
         Assert.assertEquals(3, list.getRecursive(2).intValue());
-        for (int i = 0; i < list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             int real = list.getRecursive(i);
             Assert.assertEquals(list.get(i).intValue(), real);
         }
