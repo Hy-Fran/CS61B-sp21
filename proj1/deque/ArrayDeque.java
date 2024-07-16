@@ -40,7 +40,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private void growSize() {
-        resize(size * 4);
+        resize(size * size);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         @Override
         public boolean hasNext() {
-            return (index + 1) < size;
+            return index < size;
         }
 
         @Override

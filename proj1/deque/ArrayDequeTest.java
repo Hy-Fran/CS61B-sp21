@@ -114,14 +114,22 @@ public class ArrayDequeTest {
         list.addLast(3);
         list.addLast(4);
         list.addLast(5);
-        Iterator<Integer> iterator = list.iterator();
+        Iterator<Integer> iter = list.iterator();
+        int iterationRecord = 0;
         int expectedValue = 1;
-        while (iterator.hasNext()) {
-            int item = iterator.next();
-            assertEquals(item, expectedValue);
+        while (iter.hasNext()) {
+            iterationRecord++;
+            int item = iter.next();
+            assertEquals(expectedValue, item);
             expectedValue++;
         }
+        //迭代次数
+        assertEquals(5, iterationRecord);
 
+        ArrayDeque<Integer> list2 = new ArrayDeque<>();
+        assertFalse(list2.iterator().hasNext());
+        list2.addFirst(1);
+        assertTrue(list2.iterator().hasNext());
     }
 
     @Test
