@@ -7,7 +7,9 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 
-/** Performs some basic linked list tests. */
+/**
+ * Performs some basic linked list tests.
+ */
 public class ArrayDequeTest {
 
     @Test
@@ -78,8 +80,8 @@ public class ArrayDequeTest {
     /* Check if you can create LinkedListDeques with different parameterized types*/
     public void multipleParamTest() {
 
-        ArrayDeque<String>  arrayDeque1 = new ArrayDeque<String>();
-        ArrayDeque<Double>  arrayDeque2 = new ArrayDeque<Double>();
+        ArrayDeque<String> arrayDeque1 = new ArrayDeque<String>();
+        ArrayDeque<Double> arrayDeque2 = new ArrayDeque<Double>();
         ArrayDeque<Boolean> arrayDeque3 = new ArrayDeque<Boolean>();
 
         arrayDeque1.addFirst("string");
@@ -99,13 +101,13 @@ public class ArrayDequeTest {
 
         boolean passed1 = false;
         boolean passed2 = false;
-        assertEquals("Should return null when removeFirst is called on an empty Deque,", null, arrayDeque.removeFirst());
-        assertEquals("Should return null when removeLast is called on an empty Deque,", null, arrayDeque.removeLast());
+        assertNull("Should return null when removeFirst is called on an empty Deque,", arrayDeque.removeFirst());
+        assertNull("Should return null when removeLast is called on an empty Deque,", arrayDeque.removeLast());
 
     }
 
     @Test
-    public void iteratorTest(){
+    public void iteratorTest() {
         ArrayDeque<Integer> list = new ArrayDeque<>();
         list.addLast(1);
         list.addLast(2);
@@ -114,7 +116,7 @@ public class ArrayDequeTest {
         list.addLast(5);
         Iterator<Integer> iterator = list.iterator();
         int i = 1;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             int item = iterator.next();
             assertEquals(item, i);
             i++;
@@ -122,7 +124,7 @@ public class ArrayDequeTest {
     }
 
     @Test
-    public void listEquals(){
+    public void listEquals() {
         ArrayDeque<Integer> list1 = new ArrayDeque<>();
         list1.addLast(1);
         list1.addLast(2);
@@ -145,7 +147,7 @@ public class ArrayDequeTest {
     }
 
     @Test
-    public void testResize(){
+    public void testResize() {
         ArrayDeque<Integer> list = new ArrayDeque<>(2);
         list.addLast(2);
         list.addLast(2);

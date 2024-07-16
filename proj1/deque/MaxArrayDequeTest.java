@@ -3,10 +3,12 @@ package deque;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Comparator;
+
 public class MaxArrayDequeTest {
 
     @Test
-    public void testMax(){
+    public void testMax() {
         Comparator<Integer> realValueComparator = (item1, item2) -> item1.compareTo(item2);
 
         MaxArrayDeque<Integer> maxArrayDeque = new MaxArrayDeque<>(realValueComparator);
