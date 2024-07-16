@@ -149,12 +149,29 @@ public class ArrayDequeTest {
 
     @Test
     public void testResize() {
-        ArrayDeque<Integer> list = new ArrayDeque<>(2);
+        ArrayDeque<Integer> list = new ArrayDeque<>();
         list.addLast(2);
         list.addLast(2);
         list.addLast(2);
         list.addLast(2);
         list.addLast(2);
         list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(2);
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
+        list.removeFirst();
     }
 }

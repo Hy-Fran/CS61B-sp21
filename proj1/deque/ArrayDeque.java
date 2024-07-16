@@ -1,5 +1,6 @@
 package deque;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
@@ -7,11 +8,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size = 0;
 
     public ArrayDeque() {
-        this(8);
-    }
-
-    public ArrayDeque(int capacity) {
-        items = (T[]) new Object[capacity];
+        items = (T[]) new Object[8];
     }
 
     public void resize(int capacity) {
@@ -25,24 +22,26 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addFirst(T item) {
         if (size == items.length) {
-            resize(size * 4);
+            growSize();
         }
+        T[] newItems = (T[]) new Object[items.length];
+        System.arraycopy(items, 0, newItems, 1, size);
+        newItems[0] = item;
+        items = newItems;
         size += 1;
-        T swap = item;
-        for (int i = 0; i < size; i++) {
-            T original = items[i];
-            items[i] = swap;
-            swap = original;
-        }
     }
 
     @Override
     public void addLast(T item) {
         if (size == items.length) {
-            resize(size * 4);
+            growSize();
         }
         items[size] = item;
         size += 1;
+    }
+
+    private void growSize(){
+        resize((int) (size * (1.25)));
     }
 
     @Override
@@ -63,18 +62,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length / 4 > size - 1) {
-            resize(items.length / 4);
+        if (items.length / 4 > size && size > 4) {
+            decreaseSize();
         }
+        T[] newItems = (T[]) new Object[items.length];
         size -= 1;
+        System.arraycopy(items, 1, newItems, 0, size);
         T first = items[0];
-
-        T swap = items[size];
-        for (int i = size - 1; i >= 0; i--) {
-            T original = items[i];
-            items[i] = swap;
-            swap = original;
-        }
+        items = newItems;
         return first;
     }
 
@@ -83,13 +78,17 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length / 4 > size - 1) {
-            resize(items.length / 4);
+        if (items.length / 4 > size && size > 4) {
+            decreaseSize();
         }
         size -= 1;
         T item = items[size];
         items[size] = null;
         return item;
+    }
+
+    private void decreaseSize(){
+        resize(items.length / 4);
     }
 
     @Override
