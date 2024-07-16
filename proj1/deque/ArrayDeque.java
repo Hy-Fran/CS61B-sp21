@@ -83,10 +83,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        size -= 1;
-        if (items.length / 4 > size) {
+        if (items.length / 4 > size - 1) {
             resize(items.length / 4);
         }
+        size -= 1;
         T item = items[size];
         items[size] = null;
         return item;

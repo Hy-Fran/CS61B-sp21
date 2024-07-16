@@ -115,12 +115,13 @@ public class ArrayDequeTest {
         list.addLast(4);
         list.addLast(5);
         Iterator<Integer> iterator = list.iterator();
-        int i = 1;
+        int expectedValue = 1;
         while (iterator.hasNext()) {
             int item = iterator.next();
-            assertEquals(item, i);
-            i++;
+            assertEquals(item, expectedValue);
+            expectedValue++;
         }
+
     }
 
     @Test

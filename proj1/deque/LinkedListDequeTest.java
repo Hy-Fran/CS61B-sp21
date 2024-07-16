@@ -135,12 +135,19 @@ public class LinkedListDequeTest {
         list.addLast(4);
         list.addLast(5);
         Iterator<Integer> iter = list.iterator();
-        int i = 1;
+        int iterationRecord = 0;
+        int expectedValue = 1;
         while (iter.hasNext()) {
+            iterationRecord++;
             int item = iter.next();
-            assertEquals(item, i);
-            i++;
+            assertEquals(expectedValue, item);
+            expectedValue++;
         }
+        //迭代出的最后的值
+        assertEquals(5, iterationRecord);
+
+        LinkedListDeque<Integer> list2 = new LinkedListDeque<>();
+        assertFalse(list2.iterator().hasNext());
     }
 
     @Test
