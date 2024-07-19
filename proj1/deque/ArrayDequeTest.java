@@ -3,6 +3,7 @@ package deque;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -156,30 +157,45 @@ public class ArrayDequeTest {
     }
 
     @Test
+    public void randomOperation() {
+        ArrayDeque<Integer> deque = new ArrayDeque<>();
+        for (int i = 0; i < 1145; i++) {
+            int operation = new Random().nextInt(4);
+            int item = new Random().nextInt(Integer.MAX_VALUE);
+            switch (operation) {
+                case 0:
+                    deque.addFirst(item);
+                    break;
+                case 1:
+                    deque.addLast(item);
+                    break;
+                case 2:
+                    deque.removeFirst();
+                    break;
+                case 3:
+                    deque.removeLast();
+                    break;
+            }
+        }
+    }
+
+    @Test
     public void testResize() {
         ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addLast(1);
         list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
-        list.addLast(2);
+        list.addLast(3);
+        list.addFirst(4);
+        list.addFirst(5);
+        list.addFirst(6);
         list.removeFirst();
         list.removeFirst();
         list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
+        list.addLast(4);
+        list.addLast(5);
+        list.addLast(6);
+        list.addLast(7);
+        list.addLast(8);
+        list.addFirst(0);
     }
 }

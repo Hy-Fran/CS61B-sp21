@@ -3,7 +3,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
+public class LinkedListDeque<T> implements Deque<T> {
     private final Node sentinel;
     private int size = 0;
     private Node recursive;
@@ -25,6 +25,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
      */
     @Override
     public void addFirst(T item) {
+        if (item == null) {
+            return;
+        }
         size++;
         Node original = sentinel.next;
         Node newNode = new Node(item, sentinel, original);
@@ -39,6 +42,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
      */
     @Override
     public void addLast(T item) {
+        if (item == null) {
+            return;
+        }
         size++;
         Node original = sentinel.prev;
         Node newNode = new Node(item, original, sentinel);

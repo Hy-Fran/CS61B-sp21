@@ -2,20 +2,55 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
+public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
+    /**
+     * 这个是指向队列的头下标, 队列的首端元素
+     */
+    private int head;
+    /**
+     * 这个是指向队列的尾下标, 队列尾端元素的下一个空位
+     */
+    private int tail;
     private int size = 0;
 
     public ArrayDeque() {
+        head = 0;
+        tail = 0;
         items = (T[]) new Object[8];
     }
 
     private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
-        for (int i = 0; i < size && i < capacity; i++) {
-            newArray[i] = items[i];
+        /* 尾在后 */
+        if (tail - head > 0) {
+            try {
+                System.arraycopy(items, head, newArray, 0, size);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+        } else {
+            int headToArrayEndDistance = items.length - 1 - head;
+            System.arraycopy(items, head, newArray, 0, headToArrayEndDistance + 1);
+            System.arraycopy(items, 0, newArray, headToArrayEndDistance + 1, tail);
         }
+        head = 0;
+        tail = size;
         items = newArray;
+    }
+
+    private int markForward(int mark) {
+        if (mark + 1 == items.length) {
+            return 0;
+        }
+        return mark + 1;
+    }
+
+    private int markBack(int mark) {
+        if (mark - 1 == -1) {
+            return items.length - 1;
+        }
+        return mark - 1;
     }
 
     @Override
@@ -23,11 +58,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == items.length) {
             growSize();
         }
-        T[] newItems = (T[]) new Object[items.length];
-        System.arraycopy(items, 0, newItems, 1, size);
-        newItems[0] = item;
-        items = newItems;
+        /* 注意要先把size +=1 放前面 而不是markdownBack在前 */
         size += 1;
+        int addLocation = markBack(head);
+        items[addLocation] = item;
+        head = addLocation;
     }
 
     @Override
@@ -35,12 +70,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == items.length) {
             growSize();
         }
-        items[size] = item;
+        items[tail] = item;
         size += 1;
+        /* 注意要先把size +=1 放前面 而不是markdownForward在前 */
+        tail = markForward(tail);
     }
 
     private void growSize() {
-        resize(size * 10);
+        resize(size * 2);
     }
 
     @Override
@@ -64,12 +101,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (items.length / 4 > size && size > 8) {
             decreaseSize();
         }
-        T[] newItems = (T[]) new Object[items.length];
+        T item = items[head];
+        items[head] = null;
         size -= 1;
-        System.arraycopy(items, 1, newItems, 0, size);
-        T first = items[0];
-        items = newItems;
-        return first;
+        head = markForward(head);
+        return item;
     }
 
     @Override
@@ -81,7 +117,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             decreaseSize();
         }
         size -= 1;
-        T item = items[size];
+        tail = markBack(tail);
+        T item = items[tail];
         items[size] = null;
         return item;
     }
@@ -101,8 +138,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private boolean contains(T item) {
-        for (int i = 0; i < size; i++) {
-            if (items[i].equals(item)) {
+        for (T currentItem : items) {
+            if (currentItem.equals(item)) {
                 return true;
             }
         }
@@ -121,8 +158,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (paramDeque.size() != size()) {
             return false;
         }
-        for (int i = 0; i < size; i++) {
-            if (!contains(paramDeque.get(i))) {
+        for (T item : paramDeque) {
+            if (!contains(item)) {
                 return false;
             }
         }
@@ -133,18 +170,18 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         private int index;
 
         ArrayDequeIterator() {
-            index = 0;
+            index = head;
         }
 
         @Override
         public boolean hasNext() {
-            return index < size;
+            return index != tail;
         }
 
         @Override
         public T next() {
             T item = items[index];
-            index += 1;
+            index = markForward(index);
             return item;
         }
     }
