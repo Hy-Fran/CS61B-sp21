@@ -119,7 +119,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size -= 1;
         tail = markBack(tail);
         T item = items[tail];
-        items[size] = null;
+        items[tail] = null;
         return item;
     }
 

@@ -149,6 +149,15 @@ public class ArrayDequeTest {
         Assert.assertEquals(2, list.get(1).intValue());
         Assert.assertEquals(3, list.get(2).intValue());
         Assert.assertEquals(4, list.get(3).intValue());
+        ArrayDeque<Integer> list2 = new ArrayDeque<>();
+        list2.addLast(0);
+        Assert.assertEquals(0, list2.removeFirst().intValue());
+        list2.addLast(2);
+        Assert.assertEquals(2, list2.removeLast().intValue());
+        list2.addLast(4);
+        list2.addLast(5);
+        list2.removeLast();
+        Assert.assertEquals(4, list2.get(0).intValue());
     }
 
     @Test
