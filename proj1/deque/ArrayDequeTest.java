@@ -210,19 +210,27 @@ public class ArrayDequeTest {
     public void equalTest() {
         ArrayDeque<Integer> list = new ArrayDeque<>();
         list.addLast(1);
+        list.removeFirst();
+        list.addFirst(1);
         list.addLast(2);
         list.addLast(2);
         list.addLast(3);
         list.addLast(4);
+        list.addLast(5);
 
         ArrayDeque<Integer> list2 = new ArrayDeque<>();
         list2.addLast(1);
+        list2.removeFirst();
         list2.addLast(1);
         list2.addLast(2);
         list2.addLast(3);
         list2.addLast(4);
+        list2.removeFirst();
+        list2.addFirst(1);
+        list2.addLast(5);
+        list2.addLast(1);
 
-        assertTrue(list.equals(list2));
+        assertEquals(list, list2);
     }
 
     @Test

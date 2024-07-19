@@ -93,7 +93,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void printDeque() {
-        for (T item : items) {
+        for (T item : this) {
             System.out.print(item + " ");
         }
         System.out.println();
@@ -148,7 +148,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private boolean contains(T item) {
-        for (T currentItem : items) {
+        for (T currentItem : this) {
             if (currentItem.equals(item)) {
                 return true;
             }
