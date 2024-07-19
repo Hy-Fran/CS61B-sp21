@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     /**
      * 这个是指向队列的头下标, 队列的首端元素
@@ -129,6 +129,10 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T get(int index) {
+        index = head + index;
+        if (index >= items.length) {
+            index = index - items.length;
+        }
         return items[index];
     }
 
@@ -158,8 +162,8 @@ public class ArrayDeque<T> implements Deque<T> {
         if (paramDeque.size() != size()) {
             return false;
         }
-        for (T item : paramDeque) {
-            if (!contains(item)) {
+        for (int i = 0; i < paramDeque.size(); i++) {
+            if (!contains(paramDeque.get(i))) {
                 return false;
             }
         }

@@ -1,5 +1,6 @@
 package deque;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -131,6 +132,23 @@ public class ArrayDequeTest {
         assertFalse(list2.iterator().hasNext());
         list2.addFirst(1);
         assertTrue(list2.iterator().hasNext());
+    }
+
+    @Test
+    public void getTest(){
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        list.addFirst(0);
+        list.removeLast();
+        list.addLast(4);
+        list.removeFirst();
+        Assert.assertEquals(1, list.get(0).intValue());
+        Assert.assertEquals(2, list.get(1).intValue());
+        Assert.assertEquals(3, list.get(2).intValue());
+        Assert.assertEquals(4, list.get(3).intValue());
     }
 
     @Test
