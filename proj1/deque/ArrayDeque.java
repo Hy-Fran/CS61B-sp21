@@ -55,6 +55,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addFirst(T item) {
+        if (item == null) {
+            return;
+        }
         if (size == items.length) {
             growSize();
         }
@@ -67,6 +70,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addLast(T item) {
+        if (item == null) {
+            return;
+        }
         if (size == items.length) {
             growSize();
         }
@@ -143,9 +149,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private boolean contains(T item) {
         for (T currentItem : items) {
-            if (item == null) {
-                return false;
-            }
             if (currentItem.equals(item)) {
                 return true;
             }
