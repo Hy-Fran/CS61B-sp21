@@ -207,6 +207,25 @@ public class ArrayDequeTest {
     }
 
     @Test
+    public void equalTest() {
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+
+        ArrayDeque<Integer> list2 = new ArrayDeque<>();
+        list2.addLast(1);
+        list2.addLast(1);
+        list2.addLast(2);
+        list2.addLast(3);
+        list2.addLast(4);
+
+        assertTrue(list.equals(list2));
+    }
+
+    @Test
     public void testResize() {
         ArrayDeque<Integer> list = new ArrayDeque<>();
         list.addLast(1);

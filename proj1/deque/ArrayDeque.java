@@ -143,6 +143,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private boolean contains(T item) {
         for (T currentItem : items) {
+            if (item == null) {
+                return false;
+            }
             if (currentItem.equals(item)) {
                 return true;
             }
