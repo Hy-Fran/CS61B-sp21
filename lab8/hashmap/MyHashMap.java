@@ -113,11 +113,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public boolean containsKey(K key) {
         int index = calculateIndex(buckets, key);
         Collection<Node> bucket = buckets[index];
-        return findNode(bucket, key) != null;
+        return findNode(key) != null;
     }
 
-    private Node findNode(Collection<Node> collection, K key) {
-        for (Node node : collection) {
+    private Node findNode(K key) {
+        for (Node node : buckets[calculateIndex(buckets, key)]) {
             if (node.key.equals(key)) {
                 return node;
             }
@@ -127,9 +127,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
-        int index = calculateIndex(buckets, key);
-        Collection<Node> bucket = buckets[index];
-        Node node = findNode(bucket, key);
+        Node node = findNode(key);
         return node == null ? null : node.value;
     }
 
@@ -141,10 +139,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     @Override
     public void put(K key, V value) {
         if ((double) size / buckets.length >= maxLoadFactor) {
-            resize();
+            resize(2);
         }
-        int index = calculateIndex(buckets, key);
-        Node node = findNode(buckets[index], key);
+        Node node = findNode(key);
         if (node != null) {
             node.value = value;
         }
@@ -167,8 +164,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return index;
     }
 
-    private void resize() {
-        Collection<Node>[] newBuckets = createTable(buckets.length * 2);
+    private void resize(double factor) {
+        Collection<Node>[] newBuckets = createTable((int) (buckets.length * factor));
         for (Collection<Node> bucket : buckets) {
             for (Node node : bucket) {
                 noResizePut(newBuckets, node);
