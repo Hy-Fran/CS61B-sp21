@@ -189,12 +189,29 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        if (size <= (double) buckets.length / 2 * maxLoadFactor) {
+            resize(0.5);
+        }
+        int index = calculateIndex(buckets, key);
+        Collection<Node> bucket = buckets[index];
+        Iterator<Node> iterator = bucket.iterator();
+        while (iterator.hasNext()) {
+            Node node = iterator.next();
+            if (node.key == key) {
+                size--;
+                iterator.remove();
+                return node.value;
+            }
+        }
+        return null;
     }
 
-    @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        Node node = findNode(key);
+        if (node != null && node.value == value) {
+            return remove(key);
+        }
+        return null;
     }
 
     private class MyHashMapIterator implements Iterator<K>{
